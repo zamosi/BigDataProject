@@ -10,6 +10,28 @@ Read the file "people" into a Dataframe and answer the following questions:
 '''
 
 from pyspark.sql import SparkSession
-import pyspark.sql.functions as F
+import pyspark.sql.functions as F   
 
 spark = SparkSession.builder.getOrCreate()
+#df all rows in file
+df_people = spark.read.csv('people.txt',header = True)
+
+#df filter male
+df_males = df_people.filter(df_people.Sex=='m')
+
+#count male
+print(df_males.count())
+
+#mean height and weight of males
+df_males\
+    .groupBy('Sex')\
+   .agg(F.mean(df_males.Height),
+        F.mean(df_males.Weight))\
+    .show(10)
+
+#height of the tallest female who is older than 40
+df_people\
+    .filter((df_people.Sex=='f')&(df_people.Age>40))\
+    .orderBy('Height',ascending=False)\
+    .show(1)
+    
