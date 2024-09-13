@@ -9,6 +9,8 @@ change columns:
 'hour' ->  'shift'
 '''
 from pyspark.sql import SparkSession
+import os
+os.chdir(r'/home/developer/projects/spark-course-python/spark_course_python/projects/spark/class/2-DataFrame')
 spark = SparkSession.builder\
   .getOrCreate()
 # Read a csv file
