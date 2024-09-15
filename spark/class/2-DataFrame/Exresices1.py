@@ -11,6 +11,10 @@ Read the file "people" into a Dataframe and answer the following questions:
 
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F   
+import os
+
+os.chdir(r'/home/developer/projects/spark-course-python/spark_course_python/projects/spark/class/2-DataFrame')
+
 
 spark = SparkSession.builder.getOrCreate()
 #df all rows in file
@@ -34,4 +38,10 @@ df_people\
     .filter((df_people.Sex=='f')&(df_people.Age>40))\
     .orderBy('Height',ascending=False)\
     .show(1)
-    
+
+# age and the average weight of the people in this age
+df_people\
+    .groupBy('Age')\
+   .agg(F.mean(df_people.Weight))\
+   .orderBy('Age',ascending=False)\
+    .show(10)
