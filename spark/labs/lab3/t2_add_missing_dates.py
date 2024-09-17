@@ -4,7 +4,11 @@ from pyspark.sql import types as T
 from pyspark.sql import Row
 from datetime import date,timedelta
 
-spark = SparkSession.builder.appName('EX3_t2').master('local').getOrCreate()
+spark = SparkSession\
+    .builder\
+    .appName('EX3_t2')\
+    .master('local')\
+    .getOrCreate()
 
 def get_dates_df():
     dummy_df = spark.createDataFrame([Row(dummy='x')])
