@@ -7,7 +7,7 @@ spark = SparkSession \
     .config("spark.driver.memory", "4g") \
     .appName('ex3_clean_flights') \
     .getOrCreate()
-
+#.config("spark.driver.memory", "4g") - מגדיר שזכרון פנימי לאפליקציה
 flights_df = spark.read.parquet('hdfs://course-hdfs:8020/data/source/flights/')
 flights_raw_df = spark.read.parquet('hdfs://course-hdfs:8020/data/source/flights_raw/')
 
