@@ -29,6 +29,7 @@ parsed_df = stream_df \
     .withColumn('parsed_json', F.from_json(F.col('value'), json_schema)) \
     .select(F.col('parsed_json.*'))
 
+
 static_data_df = spark.read.parquet('hdfs://course-hdfs:8020/data/source/google_apps/')
 
 static_data_df.cache()
