@@ -35,7 +35,7 @@ json_schema = T.StructType([T.StructField('event_id',T.StringType(),True),
                             T.StructField('car_id',T.IntegerType(),True),
                             T.StructField('speed',T.IntegerType(),True),
                             T.StructField('rpm',T.IntegerType(),True),
-                            T.StructField('rpgearm',T.IntegerType(),True)])
+                            T.StructField('gear',T.IntegerType(),True)])
 
 stream_df = spark \
  .readStream \
@@ -43,6 +43,7 @@ stream_df = spark \
  .option("kafka.bootstrap.servers", "course-kafka:9092") \
  .option("subscribe", "sensors-sample") \
  .option('startingOffsets', 'earliest') \
+ .option("failOnDataLoss", "false") \
  .load() \
  .select(F.col('value').cast(T.StringType()))
 
@@ -57,8 +58,8 @@ join_df = parsed_df.join(F.broadcast(cars_df),'car_id')\
                     .join(F.broadcast(car_colors_df),'color_id')\
                     .withColumn('brand_name',F.col('car_brand'))\
                     .withColumn('model_name',F.col('car_model'))\
-                    .withColumn('expected_gear',F.col('speed')/F.lit(30).cast('int'))\
-                    .select('driver_id','brand_name','model_name','color_name','expected_gear')
+                    .withColumn('expected_gear',F.col('speed')/F.lit(30).cast('float'))\
+                    .select('event_id','event_time','car_id','speed','rpm','gear','driver_id','brand_name','model_name','color_name','expected_gear')
  
 
 
