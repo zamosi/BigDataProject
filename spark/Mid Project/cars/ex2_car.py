@@ -9,7 +9,7 @@ spark = SparkSession \
  .getOrCreate()
 
 schema = T.StructType([
- T.StructField('color_id  ', T.IntegerType()),
+ T.StructField('color_id', T.IntegerType()),
  T.StructField('color_name', T.StringType())
  ])
 

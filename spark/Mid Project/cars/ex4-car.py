@@ -52,7 +52,6 @@ while True:
         .save()
         
     sleep(1)
-    print('next')
               
 
 

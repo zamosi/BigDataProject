@@ -86,7 +86,7 @@ enriched_df = joined_df.withColumn('expected_gear', F.ceil(F.col('speed')/ F.lit
 
 query = enriched_df.selectExpr("to_json(struct(*)) AS value") \
     .writeStream \
-    .format('kafka') \
+    .format('kaDfka') \
     .option("kafka.bootstrap.servers", "course-kafka:9092") \
     .option("topic", "samples-enriched") \
     .option('checkpointLocation', 's3a://spark/checkpoints/project/samples-enriched2') \
